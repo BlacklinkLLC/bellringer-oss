@@ -1,0 +1,72 @@
+{
+  "school": {
+    "name": "Lincoln Middle School",
+    "district": "Lincoln Public Schools"
+  },
+
+  "settings": {
+    "timezone": "America/Chicago",
+    "showClock": true,
+    "showAnnouncements": true,
+    "showProgress": true
+  },
+
+  "schedule": [
+    {
+      "name": "Homeroom",
+      "start": "08:00",
+      "end": "08:20"
+    },
+    {
+      "name": "Period 1",
+      "start": "08:25",
+      "end": "09:15"
+    },
+    {
+      "name": "Period 2",
+      "start": "09:20",
+      "end": "10:10"
+    },
+    {
+      "name": "Period 3",
+      "start": "10:15",
+      "end": "11:05"
+    },
+    {
+      "name": "Lunch",
+      "start": "11:10",
+      "end": "11:40"
+    },
+    {
+      "name": "Period 4",
+      "start": "11:45",
+      "end": "12:35"
+    },
+    {
+      "name": "Period 5",
+      "start": "12:40",
+      "end": "13:30"
+    },
+    {
+      "name": "Period 6",
+      "start": "13:35",
+      "end": "14:25"
+    },
+    {
+      "name": "Period 7",
+      "start": "14:30",
+      "end": "15:20"
+    }
+  ],
+
+  "announcements": [
+    {
+      "title": "Welcome",
+      "message": "Have a great school day!"
+    },
+    {
+      "title": "Clubs",
+      "message": "Check the student activities board for today's meetings."
+    }
+  ]
+}
