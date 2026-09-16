@@ -1,31 +1,44 @@
-* {
-    box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css2?family=Syne:ital,opsz,wght@0,9..144,340..900;1,9..144,340..900&display=swap');
+
+/* ---------------------------------------------
+   Tokens
+--------------------------------------------- */
+:root {
+    /* color */
+    --bg: #0a0a10;
+    --bg-glow-1: rgba(255, 176, 32, 0.10);
+    --bg-glow-2: rgba(124, 156, 143, 0.06);
+    --ink: #f4efe4;
+    --ink-dim: rgba(244, 239, 228, 0.58);
+    --ink-faint: rgba(244, 239, 228, 0.34);
+    --line: rgba(244, 239, 228, 0.12);
+    --line-soft: rgba(244, 239, 228, 0.07);
+    --panel: rgba(244, 239, 228, 0.035);
+    --amber: #ffb020;
+    --amber-dim: rgba(255, 176, 32, 0.14);
+    --sage: #7c9c8f;
+
+    /* type */
+    --font-display: "Syne", Georgia, serif;
+    --font-ui: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    color-scheme: dark;
 }
 
-:root {
-    font-family:
-        Inter,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-    color: #ffffff;
-    background: #08080f;
+* {
+    box-sizing: border-box;
 }
 
 body {
     margin: 0;
     min-height: 100vh;
 
+    color: var(--ink);
+    font-family: var(--font-ui);
     background:
-        radial-gradient(
-            circle at 80% 0%,
-            rgba(255, 176, 32, 0.12),
-            transparent 32rem
-        ),
-        #08080f;
+        radial-gradient(circle at 84% -4%, var(--bg-glow-1), transparent 34rem),
+        radial-gradient(circle at 6% 100%, var(--bg-glow-2), transparent 30rem),
+        var(--bg);
 }
 
 header,
@@ -35,203 +48,186 @@ footer {
     margin: 0 auto;
 }
 
+/* ---------------------------------------------
+   Header
+--------------------------------------------- */
 header {
-    padding: 32px 24px 18px;
-
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
-
     gap: 20px;
-}
 
-main {
-    padding: 12px 24px 36px;
-}
-
-h1,
-h2,
-h3,
-h4,
-p {
-    margin-top: 0;
+    padding: 34px 24px 20px;
+    border-bottom: 1px solid var(--line-soft);
 }
 
 h1 {
-    margin-bottom: 0;
-
-    font-size: clamp(
-        1.3rem,
-        3vw,
-        2rem
-    );
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 560;
+    font-size: clamp(1.25rem, 3vw, 1.7rem);
+    letter-spacing: 0.01em;
 }
 
-h2 {
-    margin-bottom: 8px;
-
-    font-size: clamp(
-        2rem,
-        6vw,
-        4.5rem
-    );
-
-    line-height: 1;
+#clock {
+    font-size: 1.05rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-dim);
+    letter-spacing: 0.02em;
 }
 
-h3 {
-    margin-bottom: 16px;
+/* ---------------------------------------------
+   Main
+--------------------------------------------- */
+main {
+    padding: 28px 24px 40px;
 }
 
-h4 {
-    margin-bottom: 5px;
+h2, h3, h4, p {
+    margin-top: 0;
 }
 
 .eyebrow {
     display: block;
+    margin-bottom: 6px;
 
-    margin-bottom: 7px;
-
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.13em;
-
-    opacity: 0.62;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
 }
 
-#clock {
+h2 {
+    margin-bottom: 6px;
+
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 480;
+    font-size: clamp(2.1rem, 6.4vw, 4.4rem);
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+}
+
+h3 {
+    margin-bottom: 14px;
+
+    font-family: var(--font-display);
+    font-weight: 560;
     font-size: 1.15rem;
-    font-variant-numeric: tabular-nums;
 }
 
-.current-period,
-.panel {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-
-    background: rgba(255, 255, 255, 0.055);
-
-    backdrop-filter: blur(14px);
+h4 {
+    margin-bottom: 4px;
+    font-size: 0.98rem;
+    font-weight: 650;
 }
 
+/* ---------------------------------------------
+   Current period (hero)
+--------------------------------------------- */
 .current-period {
     display: grid;
-
-    grid-template-columns:
-        1fr
-        minmax(220px, 360px);
-
-    gap: 28px;
-
+    grid-template-columns: 1fr minmax(220px, 340px);
     align-items: end;
+    gap: 32px;
 
-    padding: 24px;
+    padding: 30px 28px 26px;
+    margin-bottom: 20px;
 
-    margin-bottom: 18px;
-}
-
-.current-period .eyebrow {
-    margin-bottom: 10px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: var(--panel);
 }
 
 .progress-container {
-    height: 12px;
-
+    height: 3px;
     overflow: hidden;
-
     border-radius: 999px;
-
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--line);
 }
 
 #progress {
     width: 0;
     height: 100%;
 
-    border-radius: inherit;
+    background: var(--amber);
+    box-shadow: 0 0 12px 0 rgba(255, 176, 32, 0.55);
 
-    background: #ffb020;
-
-    transition:
-        width 0.4s ease;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #progress-text {
     display: block;
-
-    margin-top: 8px;
+    margin-top: 10px;
 
     font-size: 0.8rem;
-
-    opacity: 0.65;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
 }
 
+/* ---------------------------------------------
+   Content columns
+--------------------------------------------- */
 .content {
     display: grid;
-
-    grid-template-columns:
-        1.6fr
-        1fr;
-
+    grid-template-columns: 1.6fr 1fr;
     gap: 18px;
+    align-items: start;
 }
 
 .panel {
-    padding: 24px;
+    padding: 26px 26px 8px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: var(--panel);
 }
 
+/* Schedule: an agenda list, not a stack of cards */
 #schedule {
-    display: grid;
-
-    gap: 8px;
+    display: flex;
+    flex-direction: column;
 }
 
 .period {
     display: grid;
-
-    grid-template-columns:
-        1fr
-        auto;
-
+    grid-template-columns: 1fr auto;
+    align-items: center;
     gap: 12px;
 
-    align-items: center;
+    padding: 14px 4px;
+    border-bottom: 1px dashed var(--line-soft);
+    border-left: 2px solid transparent;
+    padding-left: 12px;
 
-    padding: 14px;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
 
-    border-radius: 13px;
-
-    background:
-        rgba(255, 255, 255, 0.035);
+#schedule .period:last-child {
+    border-bottom: 0;
 }
 
 .period.active {
-    outline:
-        1px solid
-        rgba(255, 176, 32, 0.5);
-
-    background:
-        rgba(255, 176, 32, 0.08);
+    border-left-color: var(--amber);
+    background: var(--amber-dim);
+    border-radius: 0 10px 10px 0;
 }
 
 .period strong {
     font-size: 0.95rem;
+    font-weight: 560;
 }
 
 .period span {
     font-size: 0.8rem;
-
-    opacity: 0.55;
-
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
     white-space: nowrap;
 }
 
+/* Announcements: quiet, editorial */
 #announcements article {
-    padding: 14px 0;
-
-    border-bottom:
-        1px solid
-        rgba(255, 255, 255, 0.08);
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line-soft);
 }
 
 #announcements article:first-child {
@@ -242,32 +238,56 @@ h4 {
     border-bottom: 0;
 }
 
-#announcements p {
-    margin-bottom: 0;
-
-    font-size: 0.9rem;
-
-    line-height: 1.5;
-
-    opacity: 0.62;
+#announcements h4 {
+    color: var(--sage);
 }
 
+#announcements p {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--ink-dim);
+}
+
+/* ---------------------------------------------
+   Footer
+--------------------------------------------- */
 footer {
     padding: 0 24px 32px;
-
     font-size: 0.78rem;
-
-    opacity: 0.45;
+    color: var(--ink-faint);
 }
 
 [hidden] {
     display: none !important;
 }
 
+/* ---------------------------------------------
+   Accessibility & motion
+--------------------------------------------- */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #progress,
+    .period {
+        transition: none;
+    }
+}
+
+/* ---------------------------------------------
+   Responsive
+--------------------------------------------- */
 @media (max-width: 700px) {
 
     header {
+        flex-direction: column;
         align-items: flex-start;
+        gap: 6px;
     }
 
     #clock {
@@ -284,11 +304,10 @@ footer {
 
     .period {
         grid-template-columns: 1fr;
-        gap: 5px;
+        gap: 3px;
     }
 
     .period span {
         white-space: normal;
     }
-
 }
