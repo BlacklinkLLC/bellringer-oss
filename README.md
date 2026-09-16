@@ -1,5 +1,7 @@
 # BellRinger Open Source (OSS)
 
+<small>This product is in Beta.</small>
+
 A small, configurable school schedule dashboard built by **Blacklink, Inc.**
 
 BellRinger Open is a lightweight, open-source project inspired by the idea of making school schedules easier to view and understand. It is designed to be simple enough to learn from, customize, and contribute to.
