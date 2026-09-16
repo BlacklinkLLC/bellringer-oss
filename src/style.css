@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:ital,opsz,wght@0,9..144,340..900;1,9..144,340..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340..900;1,9..144,340..900&display=swap');
 
 /* ---------------------------------------------
    Tokens
@@ -19,7 +19,7 @@
     --sage: #7c9c8f;
 
     /* type */
-    --font-display: "Syne", Georgia, serif;
+    --font-display: "Fraunces", Georgia, serif;
     --font-ui: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
     color-scheme: dark;
@@ -95,6 +95,23 @@ h2, h3, h4, p {
     font-weight: 600;
     letter-spacing: 0.04em;
     color: var(--ink-faint);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icon {
+    vertical-align: middle;
+    object-fit: contain;
+}
+
+.eyebrow .icon,
+h3 .icon {
+    margin-right: 6px;
+    margin-top: -2px;
 }
 
 h2 {
