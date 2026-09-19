@@ -1,0 +1,135 @@
+/* ---------------------------------------------
+   Page scaffold: header, main, footer.
+--------------------------------------------- */
+
+.site-header,
+.site-main,
+.site-footer {
+    width: min(1100px, 100%);
+    margin: 0 auto;
+}
+
+/* ---------------------------------------------
+   Header
+--------------------------------------------- */
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+
+    padding: 34px 24px 20px;
+    border-bottom: 1px solid var(--line-soft);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-mark {
+    color: var(--amber);
+    flex-shrink: 0;
+}
+
+.brand-text h1 {
+    margin: 0;
+    font-size: clamp(1.25rem, 3vw, 1.7rem);
+    font-weight: 560;
+}
+
+.brand-district {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.header-clock {
+    font-size: 1.05rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-dim);
+    letter-spacing: 0.02em;
+}
+
+.header-date {
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+}
+
+/* ---------------------------------------------
+   Main
+--------------------------------------------- */
+
+.site-main {
+    padding: 28px 24px 40px;
+}
+
+.site-main:focus {
+    outline: none;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 18px;
+    align-items: start;
+}
+
+.panel {
+    padding: 26px 26px 10px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: var(--panel);
+}
+
+/* ---------------------------------------------
+   Footer
+--------------------------------------------- */
+
+.site-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 0 24px 32px;
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+}
+
+.site-footer a {
+    color: var(--ink-dim);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+}
+
+/* ---------------------------------------------
+   Responsive
+--------------------------------------------- */
+
+@media (max-width: 700px) {
+    .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .header-date {
+        display: none;
+    }
+
+    .content {
+        grid-template-columns: 1fr;
+    }
+}

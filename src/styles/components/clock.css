@@ -1,0 +1,9 @@
+/* ---------------------------------------------
+   Clock / date header numbers
+--------------------------------------------- */
+
+.header-clock,
+.header-date {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+}

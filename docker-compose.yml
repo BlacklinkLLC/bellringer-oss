@@ -1,0 +1,17 @@
+# BellRinger Open — Docker / Podman Compose.
+#
+#   docker compose up -d --build
+#   podman compose up -d --build
+#
+# config.json is mounted read-only so configuration edits apply on the next
+# page reload without rebuilding the image.
+
+services:
+  bellringer:
+    build: .
+    image: bellringer-open:latest
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    volumes:
+      - ./config.json:/app/config.json:ro

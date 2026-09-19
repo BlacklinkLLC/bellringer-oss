@@ -1,0 +1,51 @@
+/* ---------------------------------------------
+   Themes.
+   The dark theme is the default in main.css; the
+   light theme overrides the color tokens here.
+--------------------------------------------- */
+
+html[data-theme="light"] {
+    --bg: #f6f3ec;
+    --bg-glow-1: rgba(255, 176, 32, 0.16);
+    --bg-glow-2: rgba(124, 156, 143, 0.10);
+    --ink: #211e18;
+    --ink-dim: rgba(33, 30, 24, 0.62);
+    --ink-faint: rgba(33, 30, 24, 0.42);
+    --line: rgba(33, 30, 24, 0.16);
+    --line-soft: rgba(33, 30, 24, 0.09);
+    --panel: rgba(33, 30, 24, 0.03);
+    --amber: #a86f00;
+    --amber-dim: rgba(168, 111, 0, 0.12);
+    --sage: #3d6b5e;
+    --danger: #b5383f;
+
+    color-scheme: light;
+}
+
+html[data-theme="light"] .skip-link:focus {
+    color: #211e18;
+}
+
+/* ---------------------------------------------
+   High contrast
+--------------------------------------------- */
+
+@media (prefers-contrast: more) {
+    :root {
+        --line: rgba(244, 239, 228, 0.35);
+        --line-soft: rgba(244, 239, 228, 0.22);
+        --panel: rgba(244, 239, 228, 0.08);
+    }
+
+    html[data-theme="light"] {
+        --line: rgba(33, 30, 24, 0.45);
+        --line-soft: rgba(33, 30, 24, 0.3);
+        --panel: rgba(33, 30, 24, 0.06);
+    }
+
+    /* Explicit separators so structure does not rely on subtle shades. */
+    .hero,
+    .panel {
+        background: transparent;
+    }
+}

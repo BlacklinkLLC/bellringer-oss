@@ -1,0 +1,48 @@
+/* ---------------------------------------------
+   Status badge (header)
+--------------------------------------------- */
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 5px 11px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--ink-dim);
+    background: var(--panel);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ink-faint);
+    transition: background-color 0.4s ease;
+}
+
+.status-badge[data-state="in-period"] .status-dot {
+    background: var(--amber);
+    box-shadow: 0 0 0 3px var(--amber-dim);
+}
+
+.status-badge[data-state="in-passing"] .status-dot {
+    background: var(--sage);
+    box-shadow: 0 0 0 3px rgba(124, 156, 143, 0.2);
+}
+
+.status-badge[data-state="no-school"] .status-dot {
+    background: transparent;
+    border: 2px solid var(--ink-faint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .status-dot {
+        transition: none;
+    }
+}

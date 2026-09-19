@@ -1,0 +1,23 @@
+{
+  "name": "bellringer-open",
+  "version": "0.2.0",
+  "description": "A small, self-hosted, open source school schedule dashboard.",
+  "license": "MIT",
+  "type": "module",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test tests/*.test.js",
+    "icons": "node scripts/generate-icons.js"
+  },
+  "keywords": [
+    "bellr",
+    "schedule",
+    "school",
+    "dashboard",
+    "self-hosted"
+  ]
+}

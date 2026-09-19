@@ -1,85 +1,37 @@
-const http = require("http");
-const fs = require("fs");
-const path = require("path");
+/**
+ * BellRinger Open — HTTP server.
+ *
+ * Small, dependency-free entry point. Routing is split across the API and
+ * static modules in server/ so this file stays focused on wiring.
+ */
 
-const PORT = process.env.PORT || 3000;
+import http from "node:http";
+import { createStaticHandler } from "./server/static.js";
+import { createApiHandler } from "./server/api.js";
+
+const PORT = Number(process.env.PORT) || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
 
-const publicDirectory = __dirname;
+const serveStatic = createStaticHandler();
+const handleApi = createApiHandler();
 
-const mimeTypes = {
-    ".html": "text/html; charset=utf-8",
-    ".css": "text/css; charset=utf-8",
-    ".js": "text/javascript; charset=utf-8",
-    ".json": "application/json; charset=utf-8",
-    ".png": "image/png",
-    ".jpg": "image/jpeg",
-    ".jpeg": "image/jpeg",
-    ".svg": "image/svg+xml",
-    ".ico": "image/x-icon"
-};
+const server = http.createServer(async (req, res) => {
+    const url = new URL(req.url, `http://${req.headers.host || "localhost"}`);
 
-const server = http.createServer((request, response) => {
-    let requestPath = decodeURIComponent(
-        request.url.split("?")[0]
-    );
-
-    if (requestPath === "/") {
-        requestPath = "/index.html";
-    }
-
-    const filePath = path.join(
-        publicDirectory,
-        requestPath
-    );
-
-    // Prevent paths such as /../server.js
-    if (!filePath.startsWith(publicDirectory)) {
-        response.writeHead(403);
-        response.end("Forbidden");
+    if (url.pathname === "/healthz" || url.pathname.startsWith("/api/")) {
+        try {
+            await handleApi(req, res, url);
+        } catch (error) {
+            res.writeHead(500, { "Content-Type": "application/json; charset=utf-8" });
+            res.end(JSON.stringify({ ok: false, error: "Internal server error." }));
+            console.error("API error:", error);
+        }
         return;
     }
 
-    fs.stat(filePath, (error, stats) => {
-        if (error || !stats.isFile()) {
-            response.writeHead(404, {
-                "Content-Type": "text/plain; charset=utf-8"
-            });
-
-            response.end("404 Not Found");
-            return;
-        }
-
-        const extension =
-            path.extname(filePath).toLowerCase();
-
-        const contentType =
-            mimeTypes[extension] ||
-            "application/octet-stream";
-
-        fs.readFile(filePath, (error, data) => {
-            if (error) {
-                response.writeHead(500, {
-                    "Content-Type":
-                        "text/plain; charset=utf-8"
-                });
-
-                response.end("500 Internal Server Error");
-                return;
-            }
-
-            response.writeHead(200, {
-                "Content-Type": contentType,
-                "Cache-Control": "no-cache"
-            });
-
-            response.end(data);
-        });
-    });
+    serveStatic(req, res, url);
 });
 
 server.listen(PORT, HOST, () => {
-    console.log(
-        `BellRinger Open running at http://localhost:${PORT}`
-    );
+    console.log("BellRinger Open running at http://localhost:" + PORT);
 });

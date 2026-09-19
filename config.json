@@ -6,58 +6,313 @@
 
   "settings": {
     "timezone": "America/Chicago",
+    "theme": "system",
+    "defaultSchedule": "regular",
     "showClock": true,
+    "showDate": true,
+    "showStatus": true,
     "showAnnouncements": true,
-    "showProgress": true
+    "showProgress": true,
+    "showNextPeriod": true
   },
 
-  "schedule": [
-    {
-      "name": "Homeroom",
-      "start": "08:00",
-      "end": "08:20"
+  "schedules": {
+    "regular": {
+      "name": "Regular Schedule",
+      "days": ["mon", "tue", "wed", "thu", "fri"],
+      "periods": [
+        {
+          "name": "Homeroom",
+          "kind": "homeroom",
+          "start": "08:00",
+          "end": "08:20"
+        },
+        {
+          "name": "Period 1",
+          "start": "08:25",
+          "end": "09:15"
+        },
+        {
+          "name": "Period 2",
+          "start": "09:20",
+          "end": "10:10"
+        },
+        {
+          "name": "Period 3",
+          "start": "10:15",
+          "end": "11:05"
+        },
+        {
+          "name": "Lunch",
+          "kind": "lunch",
+          "start": "11:10",
+          "end": "11:40"
+        },
+        {
+          "name": "Period 4",
+          "start": "11:45",
+          "end": "12:35"
+        },
+        {
+          "name": "Period 5",
+          "start": "12:40",
+          "end": "13:30"
+        },
+        {
+          "name": "Period 6",
+          "start": "13:35",
+          "end": "14:25"
+        },
+        {
+          "name": "Period 7",
+          "start": "14:30",
+          "end": "15:20"
+        }
+      ]
     },
-    {
-      "name": "Period 1",
-      "start": "08:25",
-      "end": "09:15"
+
+    "early-release": {
+      "name": "Early Release",
+      "days": ["mon", "tue", "wed", "thu", "fri"],
+      "periods": [
+        {
+          "name": "Homeroom",
+          "kind": "homeroom",
+          "start": "08:00",
+          "end": "08:15"
+        },
+        {
+          "name": "Period 1",
+          "start": "08:20",
+          "end": "09:00"
+        },
+        {
+          "name": "Period 2",
+          "start": "09:05",
+          "end": "09:45"
+        },
+        {
+          "name": "Period 3",
+          "start": "09:50",
+          "end": "10:30"
+        },
+        {
+          "name": "Lunch",
+          "kind": "lunch",
+          "start": "10:35",
+          "end": "11:05"
+        },
+        {
+          "name": "Period 4",
+          "start": "11:10",
+          "end": "11:50"
+        },
+        {
+          "name": "Period 5",
+          "start": "11:55",
+          "end": "12:35"
+        },
+        {
+          "name": "Period 6",
+          "start": "12:40",
+          "end": "13:20"
+        }
+      ]
     },
-    {
-      "name": "Period 2",
-      "start": "09:20",
-      "end": "10:10"
+
+    "late-start": {
+      "name": "Late Start",
+      "days": ["mon", "tue", "wed", "thu", "fri"],
+      "periods": [
+        {
+          "name": "Homeroom",
+          "kind": "homeroom",
+          "start": "10:00",
+          "end": "10:20"
+        },
+        {
+          "name": "Period 1",
+          "start": "10:25",
+          "end": "11:00"
+        },
+        {
+          "name": "Period 2",
+          "start": "11:05",
+          "end": "11:40"
+        },
+        {
+          "name": "Lunch",
+          "kind": "lunch",
+          "start": "11:45",
+          "end": "12:15"
+        },
+        {
+          "name": "Period 3",
+          "start": "12:20",
+          "end": "12:55"
+        },
+        {
+          "name": "Period 4",
+          "start": "13:00",
+          "end": "13:35"
+        },
+        {
+          "name": "Period 5",
+          "start": "13:40",
+          "end": "14:15"
+        },
+        {
+          "name": "Period 6",
+          "start": "14:20",
+          "end": "14:55"
+        },
+        {
+          "name": "Period 7",
+          "start": "15:00",
+          "end": "15:35"
+        }
+      ]
     },
-    {
-      "name": "Period 3",
-      "start": "10:15",
-      "end": "11:05"
+
+    "assembly": {
+      "name": "Assembly Schedule",
+      "days": ["mon", "tue", "wed", "thu", "fri"],
+      "periods": [
+        {
+          "name": "Homeroom",
+          "kind": "homeroom",
+          "start": "08:00",
+          "end": "08:20"
+        },
+        {
+          "name": "Period 1",
+          "start": "08:25",
+          "end": "09:10"
+        },
+        {
+          "name": "Period 2",
+          "start": "09:15",
+          "end": "10:00"
+        },
+        {
+          "name": "Assembly",
+          "start": "10:05",
+          "end": "10:50"
+        },
+        {
+          "name": "Lunch",
+          "kind": "lunch",
+          "start": "10:55",
+          "end": "11:25"
+        },
+        {
+          "name": "Period 3",
+          "start": "11:30",
+          "end": "12:15"
+        },
+        {
+          "name": "Period 4",
+          "start": "12:20",
+          "end": "13:05"
+        },
+        {
+          "name": "Period 5",
+          "start": "13:10",
+          "end": "13:55"
+        },
+        {
+          "name": "Period 6",
+          "start": "14:00",
+          "end": "14:45"
+        }
+      ]
     },
-    {
-      "name": "Lunch",
-      "start": "11:10",
-      "end": "11:40"
-    },
-    {
-      "name": "Period 4",
-      "start": "11:45",
-      "end": "12:35"
-    },
-    {
-      "name": "Period 5",
-      "start": "12:40",
-      "end": "13:30"
-    },
-    {
-      "name": "Period 6",
-      "start": "13:35",
-      "end": "14:25"
-    },
-    {
-      "name": "Period 7",
-      "start": "14:30",
-      "end": "15:20"
+
+    "testing": {
+      "name": "Testing Schedule",
+      "days": ["mon", "tue", "wed", "thu", "fri"],
+      "periods": [
+        {
+          "name": "Period 1",
+          "start": "08:00",
+          "end": "09:30"
+        },
+        {
+          "name": "Break",
+          "kind": "break",
+          "start": "09:35",
+          "end": "09:45"
+        },
+        {
+          "name": "Period 2",
+          "start": "09:50",
+          "end": "11:20"
+        },
+        {
+          "name": "Lunch",
+          "kind": "lunch",
+          "start": "11:25",
+          "end": "11:55"
+        },
+        {
+          "name": "Period 3",
+          "start": "12:00",
+          "end": "13:30"
+        },
+        {
+          "name": "Period 4",
+          "start": "13:35",
+          "end": "15:05"
+        }
+      ]
     }
-  ],
+  },
+
+  "calendar": {
+    "2026-09-07": {
+      "type": "no-school",
+      "name": "Labor Day"
+    },
+    "2026-09-21": {
+      "type": "no-school",
+      "name": "Teacher Work Day"
+    },
+    "2026-10-02": {
+      "type": "schedule",
+      "name": "Early Release",
+      "schedule": "early-release"
+    },
+    "2026-10-09": {
+      "type": "schedule",
+      "name": "State Testing",
+      "schedule": "testing"
+    },
+    "2026-11-25": {
+      "type": "schedule",
+      "name": "Assembly Day",
+      "schedule": "assembly"
+    },
+    "2026-11-26": {
+      "type": "no-school",
+      "name": "Thanksgiving"
+    },
+    "2026-11-27": {
+      "type": "no-school",
+      "name": "Thanksgiving Recess"
+    },
+    "2026-12-23": {
+      "type": "no-school",
+      "name": "Winter Break"
+    },
+    "2026-12-24": {
+      "type": "no-school",
+      "name": "Winter Break"
+    },
+    "2026-12-25": {
+      "type": "no-school",
+      "name": "Winter Break"
+    }
+  },
 
   "announcements": [
     {
@@ -66,7 +321,13 @@
     },
     {
       "title": "Clubs",
-      "message": "Check the student activities board for today's meetings."
+      "message": "Check the student activities board for today's meetings.",
+      "until": "2026-10-02"
+    },
+    {
+      "title": "Digital Citizenship",
+      "message": "A short reminder: be kind, be safe, be responsible online.",
+      "rotate": true
     }
   ]
 }

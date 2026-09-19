@@ -1,0 +1,111 @@
+/* ---------------------------------------------
+   Display mode (TV / wall display).
+   Activated via /?mode=display -> html.display-mode
+--------------------------------------------- */
+
+html.display-mode body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+html.display-mode .site-header {
+    flex: 1;
+    align-items: flex-start;
+    border-bottom: 0;
+    padding: clamp(18px, 3vh, 40px) clamp(24px, 4vw, 64px) 0;
+}
+
+html.display-mode .brand-text h1 {
+    font-size: clamp(1.4rem, 3.2vh, 2.2rem);
+}
+
+html.display-mode .header-clock,
+html.display-mode .header-date {
+    font-size: clamp(1rem, 2.6vh, 1.8rem);
+}
+
+html.display-mode .header-date {
+    order: 1;
+}
+
+html.display-mode .header-right {
+    align-items: flex-end;
+}
+
+html.display-mode .site-main {
+    width: 100%;
+    flex: 8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: clamp(20px, 4vh, 48px) clamp(40px, 7vw, 120px);
+}
+
+html.display-mode .hero {
+    width: 100%;
+    margin-bottom: 0;
+    padding: clamp(24px, 4vh, 56px) clamp(28px, 5vw, 72px);
+}
+
+html.display-mode .current-period-title {
+    font-size: clamp(4rem, 16vh, 13rem);
+    margin-bottom: clamp(6px, 1.5vh, 18px);
+}
+
+html.display-mode .current-range {
+    font-size: clamp(1.2rem, 3.4vh, 2.4rem);
+    margin-bottom: clamp(20px, 4vh, 48px);
+}
+
+html.display-mode .progress-block,
+html.display-mode .next-period {
+    max-width: none;
+}
+
+html.display-mode .progress-bar {
+    height: clamp(6px, 1.6vh, 14px);
+}
+
+html.display-mode .progress-meta span {
+    font-size: clamp(1rem, 2.6vh, 2rem);
+}
+
+html.display-mode .next-period {
+    width: fit-content;
+    border: 1px dashed var(--line);
+    border-radius: 18px;
+    gap: 6px 16px;
+    padding: clamp(12px, 2.4vh, 24px) clamp(18px, 2.6vw, 32px);
+}
+
+html.display-mode .next-period strong,
+html.display-mode .next-start,
+html.display-mode .next-countdown {
+    font-size: clamp(1.2rem, 3.2vh, 2.6rem);
+}
+
+html.display-mode .next-countdown {
+    font-size: clamp(1.3rem, 3.6vh, 3rem);
+}
+
+/* Hide everything that is not needed on a wall display. */
+html.display-mode .content,
+html.display-mode .site-footer,
+html.display-mode .eyebrow,
+html.display-mode .brand-district {
+    display: none;
+}
+
+/* No cursor needed; input is irrelevant. */
+html.display-mode {
+    cursor: none;
+}
+
+/* Center the hero content vertically on very short screens */
+@media (max-height: 500px) {
+    html.display-mode .site-main {
+        justify-content: flex-start;
+    }
+}

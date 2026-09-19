@@ -1,0 +1,33 @@
+/* ---------------------------------------------
+   Announcements
+--------------------------------------------- */
+
+.announcements-panel h3 {
+    margin-bottom: 14px;
+    font-weight: 560;
+    font-size: 1.15rem;
+}
+
+.announcement {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line-soft);
+}
+
+.announcement:first-child {
+    padding-top: 0;
+}
+
+.announcement:last-child {
+    border-bottom: 0;
+}
+
+.announcement-title {
+    color: var(--sage);
+}
+
+.announcement-message {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--ink-dim);
+}
