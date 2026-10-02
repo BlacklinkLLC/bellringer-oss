@@ -20,17 +20,31 @@ html.display-mode .brand-text h1 {
     font-size: clamp(1.4rem, 3.2vh, 2.2rem);
 }
 
-html.display-mode .header-clock,
-html.display-mode .header-date {
-    font-size: clamp(1rem, 2.6vh, 1.8rem);
-}
-
-html.display-mode .header-date {
-    order: 1;
-}
-
 html.display-mode .header-right {
+    flex-direction: column;
     align-items: flex-end;
+    gap: clamp(2px, 0.8vh, 8px);
+}
+
+/* The clock is the thing people glance at from across a hallway. */
+html.display-mode .header-clock {
+    order: 1;
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 9vh, 7rem);
+    font-weight: 500;
+    line-height: 1;
+    color: var(--ink);
+}
+
+html.display-mode .header-date {
+    order: 2;
+    font-size: clamp(1rem, 2.8vh, 2rem);
+    color: var(--ink-dim);
+}
+
+html.display-mode .status-badge {
+    order: 3;
+    font-size: clamp(0.9rem, 2.4vh, 1.6rem);
 }
 
 html.display-mode .site-main {
@@ -41,6 +55,16 @@ html.display-mode .site-main {
     justify-content: center;
 
     padding: clamp(20px, 4vh, 48px) clamp(40px, 7vw, 120px);
+}
+
+html.display-mode .widget-grid {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(12px, 2.4vh, 28px);
+}
+
+html.display-mode .widget {
+    width: 100%;
 }
 
 html.display-mode .hero {
@@ -92,6 +116,7 @@ html.display-mode .next-countdown {
 
 /* Hide everything that is not needed on a wall display. */
 html.display-mode .content,
+html.display-mode .widget-title,
 html.display-mode .site-footer,
 html.display-mode .eyebrow,
 html.display-mode .brand-district {

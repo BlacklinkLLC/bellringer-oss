@@ -87,6 +87,19 @@ export function weekdayForDateKey(dateKey) {
 }
 
 /**
+ * "2026-09-18" + 3 -> "2026-09-21". Pure calendar math, no timezone shifts.
+ */
+export function addDaysToDateKey(dateKey, days) {
+    const [year, month, day] = String(dateKey).split("-").map(Number);
+    const date = new Date(Date.UTC(year, month - 1, day + days));
+    return toDateKeyFromParts({
+        year: date.getUTCFullYear(),
+        month: date.getUTCMonth() + 1,
+        day: date.getUTCDate()
+    });
+}
+
+/**
  * A full "now" snapshot in the given timezone:
  * wall-clock parts, weekday, calendar date key, minutes/seconds of day.
  */

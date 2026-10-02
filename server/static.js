@@ -48,10 +48,12 @@ const SECURITY_HEADERS = {
     "Referrer-Policy": "no-referrer",
     "Content-Security-Policy": [
         "default-src 'self'",
-        "script-src 'self'",
-        "style-src 'self'",
-        "img-src 'self' data:",
-        "connect-src 'self'",
+        // Only the two Blacklink CDN hosts, and only for what they serve:
+        // the icon library (script + SVGs) and NOVA component CSS.
+        "script-src 'self' https://cdn.blacklink.net",
+        "style-src 'self' https://nova.blacklink.net",
+        "img-src 'self' data: https://cdn.blacklink.net",
+        "connect-src 'self' https://cdn.blacklink.net https://nova.blacklink.net",
         "font-src 'self'",
         "base-uri 'self'",
         "form-action 'none'",

@@ -9,8 +9,8 @@ html[data-theme="light"] {
     --bg-glow-1: rgba(255, 176, 32, 0.16);
     --bg-glow-2: rgba(124, 156, 143, 0.10);
     --ink: #211e18;
-    --ink-dim: rgba(33, 30, 24, 0.62);
-    --ink-faint: rgba(33, 30, 24, 0.42);
+    --ink-dim: rgba(33, 30, 24, 0.78);
+    --ink-faint: rgba(33, 30, 24, 0.66);
     --line: rgba(33, 30, 24, 0.16);
     --line-soft: rgba(33, 30, 24, 0.09);
     --panel: rgba(33, 30, 24, 0.03);

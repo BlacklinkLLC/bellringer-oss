@@ -14,7 +14,8 @@ export const DEFAULT_SETTINGS = {
     showStatus: true,
     showAnnouncements: true,
     showProgress: true,
-    showNextPeriod: true
+    showNextPeriod: true,
+    cdnIcons: true // decorative icons from cdn.blacklink.net; false = fully offline
 };
 
 export const DEFAULT_CONFIG = {
@@ -71,6 +72,8 @@ export function normalizeConfig(raw) {
         calendar: migrated.calendar || {},
         announcements: Array.isArray(migrated.announcements)
             ? migrated.announcements
-            : []
+            : [],
+        // Optional default widget layout; see README ("Widgets").
+        layout: Array.isArray(migrated.layout) ? migrated.layout : null
     };
 }

@@ -71,3 +71,22 @@ export function formatDateLabel(dateKey) {
         day: "numeric"
     });
 }
+
+/**
+ * (1, "2026-10-02") -> "Tomorrow"; (4, "2026-10-05") -> "Monday";
+ * further out -> "Mon, Oct 12".
+ */
+export function formatRelativeDay(daysAhead, dateKey) {
+    if (daysAhead === 1) {
+        return "Tomorrow";
+    }
+    const date = new Date(`${dateKey}T12:00:00`);
+    if (daysAhead < 7) {
+        return date.toLocaleDateString([], { weekday: "long" });
+    }
+    return date.toLocaleDateString([], {
+        weekday: "short",
+        month: "short",
+        day: "numeric"
+    });
+}
