@@ -1,0 +1,272 @@
+/* ---------------------------------------------
+   Widget grid + the widgets that need their own styles.
+   (current-period, schedule and announcements keep their original
+   hero.css / schedule.css / announcements.css.)
+--------------------------------------------- */
+
+.widget-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 18px;
+    align-items: start;
+}
+
+.widget {
+    min-width: 0;
+}
+
+.widget.is-empty {
+    display: none;
+}
+
+.widget.has-error::after {
+    content: "This widget hit an error. See the browser console.";
+    display: block;
+    padding: 12px 16px;
+    font-size: 0.82rem;
+    color: var(--danger);
+}
+
+/* Titles (shared by every panel widget) */
+
+.widget-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    font-weight: 560;
+    font-size: 1.15rem;
+}
+
+.widget-title-icon {
+    color: var(--ink-dim);
+}
+
+.panel.is-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 26px;
+    text-align: center;
+}
+
+/* Clock */
+
+.clock-big {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.4vw, 3rem);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+}
+
+.clock-date {
+    margin: 6px 0 0;
+    color: var(--ink-dim);
+    font-size: 0.9rem;
+}
+
+/* Countdown */
+
+.countdown-number {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+    font-weight: 500;
+    line-height: 1;
+    color: var(--amber);
+}
+
+.countdown-unit {
+    margin: 6px 0 0;
+    color: var(--ink-dim);
+    font-size: 0.9rem;
+}
+
+/* Coming up */
+
+.upcoming-list,
+.links-list {
+    margin: 0;
+    padding: 0 0 16px;
+    list-style: none;
+}
+
+.upcoming-item {
+    display: grid;
+    grid-template-columns: 6.5em minmax(0, 1fr);
+    gap: 2px 12px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--line-soft);
+}
+
+.upcoming-item:last-child {
+    border-bottom: 0;
+}
+
+.upcoming-when {
+    grid-row: span 2;
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-dim);
+}
+
+.upcoming-name {
+    font-size: 0.95rem;
+    font-weight: 560;
+}
+
+.upcoming-kind {
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+}
+
+.upcoming-item.is-no-school .upcoming-kind {
+    color: var(--amber);
+}
+
+.upcoming-empty,
+.links-empty {
+    padding: 8px 0;
+    color: var(--ink-dim);
+    font-size: 0.9rem;
+}
+
+/* Note */
+
+.note-body {
+    margin: 0 0 16px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    color: var(--ink);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.note-body.is-placeholder {
+    color: var(--ink-faint);
+    font-style: italic;
+}
+
+/* Quick links */
+
+.links-item + .links-item {
+    margin-top: 2px;
+}
+
+.links-anchor {
+    display: block;
+    padding: 9px 12px;
+    border-radius: 10px;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 560;
+    font-size: 0.92rem;
+}
+
+.links-anchor::after {
+    content: " ↗";
+    color: var(--ink-faint);
+}
+
+.links-anchor:hover,
+.links-anchor:focus-visible {
+    background: var(--amber-dim);
+}
+
+/* ---------------------------------------------
+   Edit mode
+--------------------------------------------- */
+
+.widget-grid.is-editing .widget {
+    position: relative;
+    border-radius: 24px;
+    outline: 2px dashed var(--line);
+    outline-offset: 4px;
+}
+
+.widget-grid.is-editing .widget.is-empty {
+    display: block;
+    min-height: 90px;
+}
+
+.widget-grid.is-editing .widget.is-empty::after {
+    content: "Hidden right now (nothing to show)";
+    display: block;
+    padding: 16px;
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+}
+
+.widget-toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+    padding: 8px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--sur2);
+}
+
+.widget-toolbar-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-right: auto;
+    padding-left: 4px;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.widget-btn {
+    padding: 7px 10px;
+    font-size: 0.78rem;
+}
+
+.widget-size {
+    padding: 7px 8px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.78rem;
+}
+
+@media (max-width: 700px) {
+    /* One column on phones, whatever size a widget was given. */
+    .widget {
+        grid-column: 1 / -1 !important;
+    }
+}
+
+/* ---------------------------------------------
+   Density
+--------------------------------------------- */
+
+html[data-density="compact"] .widget-grid {
+    gap: 12px;
+}
+
+html[data-density="compact"] .panel {
+    padding: 18px 18px 6px;
+    border-radius: 18px;
+}
+
+html[data-density="compact"] .hero {
+    padding: 22px 22px 20px;
+    border-radius: 18px;
+}
+
+html[data-density="compact"] .period-row {
+    padding-block: 8px;
+}
+
+html[data-density="compact"] .announcement {
+    padding-block: 11px;
+}

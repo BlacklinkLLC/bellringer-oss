@@ -9,19 +9,29 @@
 <meta name="theme-color" content="#0a0a10">
 
 <meta http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; font-src 'self'; base-uri 'self'; form-action 'none'; frame-ancestors 'self'">
+      content="default-src 'self'; script-src 'self' https://cdn.blacklink.net; style-src 'self' https://nova.blacklink.net; img-src 'self' data: https://cdn.blacklink.net; connect-src 'self' https://cdn.blacklink.net https://nova.blacklink.net; font-src 'self'; base-uri 'self'; form-action 'none'; frame-ancestors 'self'">
 
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/icons/icon-192.png">
+<!-- NOVA design system (https://nova.blacklink.net): class-scoped component CSS only.
+     Not nova-main.css / nova.css, which include a global page reset. See nova-bridge.css. -->
+<link rel="stylesheet" href="https://nova.blacklink.net/new-nova/src/buttons.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://nova.blacklink.net/new-nova/src/forms.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://nova.blacklink.net/new-nova/src/toggles.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://nova.blacklink.net/new-nova/src/badges-chips.css" crossorigin="anonymous">
 <link rel="stylesheet" href="/src/styles/main.css">
 <link rel="stylesheet" href="/src/styles/themes.css">
+<link rel="stylesheet" href="/src/styles/nova-bridge.css">
 <link rel="stylesheet" href="/src/styles/layout.css">
 <link rel="stylesheet" href="/src/styles/components/clock.css">
 <link rel="stylesheet" href="/src/styles/components/status.css">
 <link rel="stylesheet" href="/src/styles/components/hero.css">
 <link rel="stylesheet" href="/src/styles/components/schedule.css">
 <link rel="stylesheet" href="/src/styles/components/announcements.css">
+<link rel="stylesheet" href="/src/styles/components/icons.css">
+<link rel="stylesheet" href="/src/styles/components/widgets.css">
+<link rel="stylesheet" href="/src/styles/components/customize.css">
 <link rel="stylesheet" href="/src/styles/components/display-mode.css">
 </head>
 
@@ -43,6 +53,9 @@
   </div>
 
   <div class="header-right">
+    <button id="customize-button" class="btn btn-subtle customize-button" type="button" hidden>
+      Customize
+    </button>
     <span id="status-badge" class="status-badge" hidden>
       <span class="status-dot" aria-hidden="true"></span>
       <span id="status-text"></span>
@@ -54,58 +67,16 @@
 
 <main id="main-content" class="site-main" tabindex="-1">
 
-  <section class="hero" aria-labelledby="current-period-heading">
-    <div class="hero-top">
-      <span class="eyebrow">RIGHT NOW</span>
-    </div>
-
-    <h2 id="current-period" class="current-period-title">Loading&hellip;</h2>
-    <p id="current-range" class="current-range" aria-hidden="true"></p>
-
-    <div id="progress-block" class="progress-block" hidden>
-      <div id="progress-bar" class="progress-bar"
-           role="progressbar" aria-valuemin="0" aria-valuemax="100"
-           aria-valuenow="0" aria-label="Time remaining in the current period">
-        <div id="progress-fill" class="progress-fill"></div>
-      </div>
-      <div class="progress-meta">
-        <span id="progress-elapsed"></span>
-        <span id="progress-percent"></span>
-        <span id="progress-remaining"></span>
-      </div>
-    </div>
-
-    <div id="next-period" class="next-period" hidden>
-      <span class="next-label">Next</span>
-      <strong id="next-name"></strong>
-      <span id="next-start" class="next-start"></span>
-      <span id="next-countdown" class="next-countdown" hidden></span>
-    </div>
-  </section>
-
-  <div class="content">
-
-    <section id="schedule-panel" class="panel schedule-panel" aria-labelledby="schedule-title">
-      <h3 id="schedule-title">Today's Schedule</h3>
-      <ul id="schedule" class="schedule-list"></ul>
-    </section>
-
-    <section id="announcements-panel" class="panel announcements-panel" aria-labelledby="announcements-title">
-      <h3 id="announcements-title">
-        <svg class="panel-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M3 10v4c0 .6.4 1 1 1h1v4h2v-4h3l5 4V6l-5 4H4c-.6 0-1 .4-1 1Zm16 2 3 3h-2l-3-3 3-3h2l-3 3Z" fill="currentColor"/>
-        </svg>
-        Announcements
-      </h3>
-      <div id="announcements" class="announcements"></div>
-    </section>
-
-  </div>
+  <!-- Widgets are built here from the layout (see src/widgets). -->
+  <div id="widget-grid" class="widget-grid"></div>
 
 </main>
 
 <footer class="site-footer">
-  <span>BellRinger Open Source &middot; &copy; 2026 Blacklink, Inc.</span>
+  <span>
+    BellRinger Open Source &middot; &copy; 2026 Blacklink, Inc. &middot;
+    <a href="https://nova.blacklink.net" rel="noopener">NOVA UI by Blacklink Education &copy;2026</a>
+  </span>
   <a href="?mode=display">Display Mode</a>
 </footer>
 

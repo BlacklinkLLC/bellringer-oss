@@ -11,7 +11,11 @@
  *     -> snapshot for the UI / API
  */
 
-import { parseTimeToMinutes } from "../utils/time.js";
+import {
+    parseTimeToMinutes,
+    addDaysToDateKey,
+    weekdayForDateKey
+} from "../utils/time.js";
 import { normalizeKind, runsOnWeekday } from "./presets.js";
 import { getCalendarEntry, isNoSchool, getScheduleOverride } from "./calendar.js";
 
@@ -116,6 +120,32 @@ export function buildDailySchedule(config, dateKey, weekdayIndex) {
         noSchool: false,
         reason: ""
     };
+}
+
+/**
+ * Find the next day after `dateKey` that has school, looking up to
+ * `maxDays` ahead. Returns { dateKey, daysAhead, scheduleName, firstBlock }
+ * or null when nothing is scheduled in that window.
+ *
+ * Used when today is over (or is a no-school day) so the UI can say what is
+ * coming next instead of showing an empty state.
+ */
+export function findNextSchoolDay(config, dateKey, maxDays = 14) {
+    for (let ahead = 1; ahead <= maxDays; ahead += 1) {
+        const key = addDaysToDateKey(dateKey, ahead);
+        const daily = buildDailySchedule(config, key, weekdayForDateKey(key));
+        const firstBlock = daily.blocks.find((block) => !block.passing);
+
+        if (!daily.noSchool && firstBlock) {
+            return {
+                dateKey: key,
+                daysAhead: ahead,
+                scheduleName: daily.scheduleName,
+                firstBlock
+            };
+        }
+    }
+    return null;
 }
 
 /**

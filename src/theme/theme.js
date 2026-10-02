@@ -24,19 +24,50 @@ function applyTheme(theme) {
     }
 }
 
-export function initTheme(themeSetting) {
-    const theme = THEMES.includes(themeSetting) ? themeSetting : "system";
-    applyTheme(theme);
+let mediaQuery = null;
+let mediaListener = null;
+let currentSetting = null;
 
-    if (theme !== "system") {
+function stopWatchingSystem() {
+    if (mediaQuery && mediaListener) {
+        mediaQuery.removeEventListener("change", mediaListener);
+    }
+    mediaQuery = null;
+    mediaListener = null;
+}
+
+export function resolvedTheme() {
+    return document.documentElement.dataset.theme === "light" ? "light" : "dark";
+}
+
+/**
+ * Switch theme at runtime. "system" follows the OS preference and stays in
+ * sync when it changes. Fires `bellringer:themechange` so anything derived
+ * from the theme (the accent color) can recompute.
+ */
+export function setTheme(themeSetting) {
+    const theme = THEMES.includes(themeSetting) ? themeSetting : "system";
+    if (theme === currentSetting) {
         return;
     }
+    currentSetting = theme;
+    stopWatchingSystem();
+    applyTheme(theme);
 
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const onChange = () => applyTheme("system");
-    media.addEventListener("change", onChange);
+    if (theme === "system") {
+        mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        mediaListener = () => {
+            applyTheme("system");
+            window.dispatchEvent(new Event("bellringer:themechange"));
+        };
+        mediaQuery.addEventListener("change", mediaListener);
+    }
+    window.dispatchEvent(new Event("bellringer:themechange"));
+}
+
+export function initTheme(themeSetting) {
+    setTheme(themeSetting);
 
     // Allows the SPA shell to keep theme matching without a hard reload.
-    window.__bellringerThemeCleanup = () =>
-        media.removeEventListener("change", onChange);
+    window.__bellringerThemeCleanup = stopWatchingSystem;
 }

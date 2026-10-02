@@ -26,7 +26,7 @@
 }
 
 .period-time {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-variant-numeric: tabular-nums;
     color: var(--ink-faint);
     white-space: nowrap;
@@ -38,7 +38,7 @@
 }
 
 .period-kind {
-    font-size: 0.7rem;
+    font-size: 0.74rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--ink-faint);
@@ -53,7 +53,7 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
 
-    color: #201e19;
+    color: var(--on-amber);
     background: var(--amber);
 
     opacity: 0;
@@ -67,6 +67,12 @@
 
 .period-row.is-now .period-name {
     color: var(--ink);
+    font-size: 1.08rem;
+    font-weight: 700;
+}
+
+.period-row.is-now .period-time {
+    color: var(--ink);
 }
 
 .period-row.is-now .now-chip {
@@ -74,7 +80,7 @@
 }
 
 .period-row.is-past {
-    opacity: 0.5;
+    opacity: 0.62;
 }
 
 .period-row.is-passing .period-name {

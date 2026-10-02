@@ -58,7 +58,7 @@
     height: 100%;
 
     background: var(--amber);
-    box-shadow: 0 0 12px 0 rgba(255, 176, 32, 0.55);
+    box-shadow: 0 0 12px 0 var(--amber-glow);
 
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }

@@ -1,0 +1,160 @@
+/* ---------------------------------------------
+   NOVA bridge.
+
+   BellRinger Open uses components from Blacklink's NOVA design system
+   (https://nova.blacklink.net): buttons, form fields, toggles and badges,
+   loaded as class-scoped CSS files from the NOVA site (see index.html).
+   We deliberately do NOT load NOVA's global reset or its nova.js loader,
+   which would restyle the whole page.
+
+   NOVA's components are written against a set of CSS custom properties
+   (--surface, --accent, --border, ...). This file supplies them from
+   BellRinger's own theme, so NOVA controls follow the light/dark theme and
+   the accent color a user picks.
+--------------------------------------------- */
+
+:root {
+    --surface: #0f0f1a;
+    --sur2: #141420;
+    --sur3: #191928;
+    --border: #1e1e30;
+    --border2: #252538;
+    --text: var(--ink);
+    --muted: var(--ink-dim);
+    --accent: var(--amber);
+    --accent-d: color-mix(in srgb, var(--amber) 78%, black);
+    --accent-soft: var(--amber-dim);
+    --radius: 13px;
+}
+
+html[data-theme="light"] {
+    --surface: #fffdf8;
+    --sur2: #f0ebe0;
+    --sur3: #e7e1d3;
+    --border: rgba(33, 30, 24, 0.2);
+    --border2: rgba(33, 30, 24, 0.3);
+}
+
+/* NOVA assumes a dark page; correct the few places that don't adapt. */
+/* NOVA's neutral button is a 3% white wash, invisible on a light page. */
+html[data-theme="light"] .btn:not(.btn-primary):not(.btn-danger):not(.btn-subtle) {
+    background: var(--sur2);
+}
+
+.btn:hover {
+    border-color: var(--border2);
+}
+
+.btn-primary,
+.btn-primary:hover {
+    color: var(--on-amber);
+}
+
+.btn-primary:hover {
+    background: color-mix(in srgb, var(--amber) 88%, white);
+    border-color: color-mix(in srgb, var(--amber) 88%, white);
+}
+
+.toggle-item.checked {
+    border-color: var(--amber);
+    background: var(--amber-dim);
+}
+
+/* NOVA labels forms in DM Mono; the dashboard stays on its own type scale. */
+.btn,
+.form-hint,
+.field label,
+.form-label,
+.field input,
+.field textarea,
+.field select,
+.toggle-item {
+    font-family: var(--font-ui);
+}
+
+/* ---------------------------------------------
+   Fallback.
+   If the NOVA stylesheets can't be reached (offline, blocked CDN) the
+   customize drawer must still be usable. Unlayered NOVA rules always beat
+   layered ones, so these only apply when NOVA is absent.
+--------------------------------------------- */
+
+@layer nova-fallback {
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--sur2);
+        color: var(--ink);
+        font: inherit;
+        font-size: 0.82rem;
+        cursor: pointer;
+    }
+
+    .btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+    }
+
+    .btn-primary {
+        background: var(--amber);
+        border-color: var(--amber);
+        color: var(--on-amber);
+        font-weight: 700;
+    }
+
+    .btn-danger {
+        color: var(--danger);
+    }
+
+    .btn-subtle {
+        background: transparent;
+    }
+
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .field label,
+    .form-label {
+        font-size: 0.72rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--ink-dim);
+    }
+
+    .field input,
+    .field select,
+    .field textarea,
+    .form-input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--sur2);
+        color: var(--ink);
+        font: inherit;
+    }
+
+    .toggle-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--sur2);
+        cursor: pointer;
+    }
+
+    .form-hint {
+        font-size: 0.78rem;
+        color: var(--ink-dim);
+    }
+}

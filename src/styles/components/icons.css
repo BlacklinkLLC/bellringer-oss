@@ -1,0 +1,33 @@
+/* ---------------------------------------------
+   Blacklink icon library glyphs (see src/utils/icons.js).
+   The icons are two-tone brand art (amber + white), so they are drawn as
+   images and keep their own colors; a CSS mask would flatten them into a
+   single silhouette. Invisible until the library loads (or if it never
+   does), so layout never depends on it.
+--------------------------------------------- */
+
+.bl-icon {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 1.1em;
+    height: 1.1em;
+    vertical-align: -0.18em;
+
+    background: var(--bl-icon) center / contain no-repeat;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.bl-icon.is-loaded {
+    opacity: 1;
+}
+
+/* The art has white parts that disappear on a light page, so in the light
+   theme each icon sits on a small dark tile. */
+html[data-theme="light"] .bl-icon {
+    box-sizing: border-box;
+    padding: 0.14em;
+    border-radius: 0.3em;
+    background-color: #17171f;
+    background-origin: content-box;
+}

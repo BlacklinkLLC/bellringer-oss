@@ -252,3 +252,30 @@ test("legacy config: top-level schedule array migrates to regular preset", () =>
     assert.equal(config.schedules.regular.periods.length, 1);
     assert.equal(legacy.schedule, undefined);
 });
+
+test("findNextSchoolDay skips weekends and no-school calendar days", async () => {
+    const { findNextSchoolDay } = await import("../src/schedule/schedule-engine.js");
+    const config = {
+        ...TEST_CONFIG,
+        calendar: { "2026-10-05": { type: "no-school", name: "Teacher Workday" } }
+    };
+
+    // Friday 2026-10-02: Sat/Sun have no school, Monday is a no-school day.
+    const next = findNextSchoolDay(config, "2026-10-02");
+    assert.equal(next.dateKey, "2026-10-06");
+    assert.equal(next.daysAhead, 4);
+    assert.equal(next.firstBlock.name, "Homeroom");
+});
+
+test("findNextSchoolDay returns tomorrow on a normal weekday", async () => {
+    const { findNextSchoolDay } = await import("../src/schedule/schedule-engine.js");
+    const next = findNextSchoolDay(TEST_CONFIG, "2026-10-01");
+    assert.equal(next.dateKey, "2026-10-02");
+    assert.equal(next.daysAhead, 1);
+});
+
+test("addDaysToDateKey crosses month and year boundaries", async () => {
+    const { addDaysToDateKey } = await import("../src/utils/time.js");
+    assert.equal(addDaysToDateKey("2026-12-31", 1), "2027-01-01");
+    assert.equal(addDaysToDateKey("2026-02-28", 1), "2026-03-01");
+});

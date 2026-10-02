@@ -18,3 +18,19 @@ export function applyDisplayMode() {
         document.documentElement.classList.add("display-mode");
     }
 }
+/**
+ * Display mode hides all chrome (and the cursor), so give people a way out:
+ * Esc returns to the normal dashboard.
+ */
+export function enableDisplayModeExit() {
+    if (!isDisplayMode()) {
+        return;
+    }
+    window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            const url = new URL(window.location.href);
+            url.searchParams.delete("mode");
+            window.location.assign(url.pathname + url.search);
+        }
+    });
+}

@@ -7,7 +7,11 @@
  * response as an offline fallback.
  */
 
-const VERSION = "bellringer-open-v1";
+const VERSION = "bellringer-open-v3";
+
+// Blacklink CDN hosts whose assets (icon library, NOVA component CSS) are
+// cached at runtime so they keep working offline.
+const CDN_HOSTS = ["https://cdn.blacklink.net", "https://nova.blacklink.net"];
 
 const CORE_ASSETS = [
   "/",
@@ -27,24 +31,42 @@ const CORE_ASSETS = [
   "/src/utils/time.js",
   "/src/utils/format.js",
   "/src/utils/dom.js",
+  "/src/utils/icons.js",
   "/src/theme/theme.js",
   "/src/theme/display-mode.js",
   "/src/components/clock.js",
   "/src/components/school-status.js",
-  "/src/components/current-period.js",
-  "/src/components/progress.js",
-  "/src/components/next-period.js",
-  "/src/components/schedule.js",
-  "/src/components/announcements.js",
   "/src/components/error-screen.js",
+  "/src/widgets/registry.js",
+  "/src/widgets/schema.js",
+  "/src/widgets/layout.js",
+  "/src/widgets/prefs.js",
+  "/src/widgets/storage.js",
+  "/src/widgets/appearance.js",
+  "/src/widgets/host.js",
+  "/src/widgets/controller.js",
+  "/src/widgets/builtin/index.js",
+  "/src/widgets/builtin/helpers.js",
+  "/src/widgets/builtin/current-period.js",
+  "/src/widgets/builtin/schedule.js",
+  "/src/widgets/builtin/announcements.js",
+  "/src/widgets/builtin/clock.js",
+  "/src/widgets/builtin/countdown.js",
+  "/src/widgets/builtin/upcoming.js",
+  "/src/widgets/builtin/note.js",
+  "/src/widgets/builtin/links.js",
   "/src/styles/main.css",
   "/src/styles/themes.css",
+  "/src/styles/nova-bridge.css",
   "/src/styles/layout.css",
   "/src/styles/components/clock.css",
   "/src/styles/components/status.css",
   "/src/styles/components/hero.css",
   "/src/styles/components/schedule.css",
   "/src/styles/components/announcements.css",
+  "/src/styles/components/icons.css",
+  "/src/styles/components/widgets.css",
+  "/src/styles/components/customize.css",
   "/src/styles/components/display-mode.css"
 ];
 
@@ -73,7 +95,10 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const request = event.request;
 
-  if (request.method !== "GET" || !request.url.startsWith(self.location.origin)) {
+  const sameOrigin = request.url.startsWith(self.location.origin);
+  const fromCdn = CDN_HOSTS.some((host) => request.url.startsWith(host));
+
+  if (request.method !== "GET" || (!sameOrigin && !fromCdn)) {
     return;
   }
 

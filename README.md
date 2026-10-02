@@ -7,7 +7,9 @@ A small, configurable, self-hosted school schedule dashboard built by **Blacklin
 BellRinger Open is a lightweight, open-source project that shows what is happening in a school day on any screen: a classroom projector, a hallway TV, a Raspberry Pi kiosk, or a phone. It is designed to be simple enough to learn from, customize, and contribute to.
 
 > [!NOTE]
-> BellRinger Open is a separate open-source project. It does **not** contain or expose the proprietary source code of Blacklink's internal BellRinger platform, and it runs with no dependency on Blacklink services.
+> BellRinger Open is a separate open-source project. It does **not** contain or expose the proprietary source code of Blacklink's internal BellRinger platform, and it has no *required* dependency on Blacklink services. By default the page does load
+> decorative icons and UI component styles from Blacklink's public CDN (see [Privacy](#privacy)); the
+> dashboard works without them.
 
 ## Features
 
@@ -25,7 +27,11 @@ BellRinger Open is a lightweight, open-source project that shows what is happeni
 - **PWA / offline support**: installable, and keeps working when the network drops
 - **Read-only JSON API** (`/api/config`, `/api/schedule`, `/api/current`, `/api/next`, `/healthz`)
 - **Accessible**: semantic HTML, keyboard focus, screen-reader announcements, reduced-motion and high-contrast support
-- No database, no accounts, no telemetry, no external services, no build step
+- **Widget dashboard**: rearrange, resize, add and remove widgets (current period, schedule,
+  announcements, clock, countdown, upcoming calendar events, notes, quick links); see [Widgets](#widgets)
+- **Customizable per device**: theme, accent color, density, heading style and reduced motion, saved in the browser
+- No database, no accounts, no telemetry, no build step. The only outside requests are the optional
+  Blacklink CDN assets described under [Privacy](#privacy)
 
 ## Getting Started
 
@@ -121,6 +127,72 @@ page reload (the server re-reads the file on every request).
 | `showAnnouncements` | `true` / `false` | `true` | Announcements panel |
 | `showProgress` | `true` / `false` | `true` | Progress bar + elapsed/remaining |
 | `showNextPeriod` | `true` / `false` | `true` | Next period card |
+| `cdnIcons` | `true` / `false` | `true` | Load decorative icons from `cdn.blacklink.net`. `false` makes no icon requests |
+
+#### Widgets
+
+The dashboard is a grid of widgets. Click **Customize** in the header to add widgets, choose
+**Edit layout on the page** to move, resize, configure or remove them, and change the theme, accent
+color, density and heading style. Layout and appearance are saved **per device** in the browser
+(`localStorage`), so the principal's laptop and the hallway TV can look different. The Export/Import
+box in the drawer copies a setup between devices.
+
+| Widget | What it shows | Shown in display mode |
+| --- | --- | --- |
+| Current period | Current state, progress bar, what's next | yes |
+| Today's schedule | Every period today, current one highlighted | no |
+| Announcements | Messages from `config.json` | no |
+| Clock | Large clock and date | no (display mode has its own) |
+| Countdown | Days until a date you choose | yes |
+| Coming up | Upcoming no-school days and schedule changes | no |
+| Note | A message you type | no |
+| Quick links | Links to pages you use often | no |
+
+To set the **default layout for every device** (used until someone customizes their own), add a
+`layout` list to `config.json`. Sizes are `third`, `half`, `two-thirds` and `full`:
+
+```json
+"layout": [
+  { "type": "current-period", "size": "full" },
+  { "type": "schedule", "size": "two-thirds" },
+  { "type": "countdown", "size": "third",
+    "config": { "label": "Winter Break", "date": "2026-12-23" } },
+  { "type": "announcements", "size": "third" }
+]
+```
+
+Unknown widget types and invalid values are ignored rather than breaking the page. **Reset layout** in
+the drawer returns a device to this default.
+
+##### Writing your own widget
+
+A widget is one small module in `src/widgets/builtin/`. It declares a settings schema (which also
+generates its settings form), builds its DOM once in `create`, and updates it every second in `update`:
+
+```js
+export default {
+    id: "hello",
+    name: "Hello",
+    description: "Says hello.",
+    icon: "Bell",              // any name from the Blacklink icon library, optional
+    defaultSize: "third",
+    display: false,            // true = also shown in TV display mode
+    schema: { name: { type: "string", label: "Name", default: "world" } },
+    create() {
+        const element = document.createElement("section");
+        element.className = "panel";
+        return {
+            element,
+            update(ctx, config) { element.textContent = `Hello, ${config.name}!`; }
+        };
+    }
+};
+```
+
+Register it in `src/widgets/builtin/index.js` and add its file to `CORE_ASSETS` in `public/sw.js`.
+Field types: `boolean`, `string`, `textarea`, `number`, `select`, `color`, `date`. `ctx` is
+`{ config, time, daily, snapshot, upcoming }`. A widget that throws is isolated, so it can't take
+down the rest of the dashboard.
 
 #### Schedule presets
 
@@ -198,6 +270,8 @@ timezone, malformed JSON — are reported on a readable error screen instead of
 a blank page. The API returns them as `422` responses with an `errors` array.
 
 ## TV / Display Mode
+
+Press **Esc** to leave display mode.
 
 Open `/?mode=display` (or use the footer link) to turn any screen into a bell
 display:
@@ -285,17 +359,18 @@ bellringer-oss/
 │   └── static.js        # safe static serving (public/ + src/)
 ├── src/                 # browser code, also imported by the server + tests
 │   ├── app.js           # entry point: load config, theme, render loop
-│   ├── components/      # one module per dashboard component
-│   │   ├── clock.js         ├── school-status.js
-│   │   ├── current-period.js ├── progress.js
-│   │   ├── next-period.js    ├── schedule.js
-│   │   ├── announcements.js  └── error-screen.js
+│   ├── components/      # header clock + status badge, error screen
+│   │   ├── clock.js ├── school-status.js └── error-screen.js
+│   ├── widgets/         # the widget system (registry, layout, host, customize drawer)
+│   │   ├── registry.js  schema.js  layout.js  prefs.js  storage.js
+│   │   ├── host.js      controller.js  appearance.js
+│   │   └── builtin/     # one file per widget (current-period, schedule, clock, ...)
 │   ├── schedule/        # domain logic (UI-free)
 │   │   ├── schedule-engine.js └── calendar.js, presets.js
 │   ├── config/          # defaults.js, validate.js, loader.js
 │   ├── theme/           # theme.js, display-mode.js
-│   ├── utils/           # time.js, format.js, dom.js
-│   └── styles/          # split CSS: main/layout/themes + component styles
+│   ├── utils/           # time.js, format.js, dom.js, icons.js
+│   └── styles/          # split CSS: main/layout/themes, nova-bridge.css + component styles
 └── tests/               # schedule-engine + time/format tests
 ```
 
@@ -304,7 +379,8 @@ Where new code belongs:
 - **Schedule math** → `src/schedule/`
 - **Config handling** → `src/config/`
 - **Wall-clock / formatting** → `src/utils/`
-- **UI rendering** → `src/components/` (one file per component)
+- **Dashboard widgets** → `src/widgets/builtin/` (one file per widget)
+- **Other UI** → `src/components/`
 - **CSS** → `src/styles/` (either `components/` or the shared sheets)
 - **Server routes** → `server/`
 - **Tests** → `tests/`
@@ -328,9 +404,25 @@ feel large, split it the same way the existing code is split.
 ## Privacy
 
 No accounts, no database, no cloud backend, no telemetry. BellRinger Open does
-not transmit school or user data anywhere. The dashboard even works offline
-once it has loaded. If you add third-party integrations, review their privacy
-implications before deploying in a school environment.
+not transmit school or user data anywhere, and the dashboard works offline once
+it has loaded.
+
+**Blacklink CDN requests.** By default each browser also fetches two kinds of
+public, static assets from Blacklink-operated hosts (served through Cloudflare),
+which means those hosts can see the requesting device's IP address and the usual
+request headers:
+
+| Host | What | Used for | Turn off |
+| --- | --- | --- | --- |
+| `cdn.blacklink.net` | Icon library (`blacklink-icons.js` + SVGs) | Decorative icons | `"cdnIcons": false` in `settings`. Icons simply don't appear |
+| `nova.blacklink.net` | [NOVA](https://nova.blacklink.net) component CSS (buttons, forms, toggles) | Styling the Customize drawer and edit controls | Copy the four `<link>` files into `public/` and point `index.html` at them. A built-in fallback keeps the drawer usable if they can't load |
+
+The Content-Security-Policy allows only these two hosts, and only for scripts,
+styles and images respectively. Once cached by the service worker they keep
+working offline. No school data, schedule data or user input is ever sent to
+them. For a fully air-gapped install, set `cdnIcons` to `false` and self-host
+the NOVA CSS as described above. If you add other third-party integrations,
+review their privacy implications before deploying in a school environment.
 
 ## Contributing
 
